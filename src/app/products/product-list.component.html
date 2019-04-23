@@ -1,0 +1,60 @@
+<div class="card"
+     style="margin-left: 20px; margin-right: 20px">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sum-4">
+                <p class="card-text">Filter: </p>
+            </div>
+            <div class="col-sum-8">
+                <input type="search" 
+                            [(ngModel)]='filteredBy' />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sum-8" style="margin-top: 10px">
+                <h5>Filtered By: {{filteredBy}}</h5>
+            </div>
+        </div>
+        <div class='table-responsive'>
+            <table class='table'
+                   *ngIf='products && products.length'>
+            <thead>
+              <tr>
+                <th><button type="button"
+                 class="btn btn-primary" (click)= 'toggleImage()'>
+                 {{showImage ? 'Hide' : 'Show'}} Image</button>
+                </th>
+                <th>Product</th>
+                <th>Code</th>
+                <th>Available</th>
+                <th>Price</th>
+                <th>5 Start Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let product of filteredproducts'>
+                <td>
+                    <img  *ngIf = 'showImage'
+                         src = {{product.imageUrl}}
+                         title = {{product.productName}}
+                         style.width = {{imageWidth}}
+                         style.margin = {{imageMargin}}>
+                </td>
+                <td>{{product.productName}}</td>
+                <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
+                <td>{{product.releaseDate}}</td>
+                <td>{{product.price | currency:'USD':'symbol':'1.1-1'}} </td>
+                <td><pm-star [rating]= 'product.starRating' 
+                    (ratingClicked)="onRatingClicked($event)">
+                    </pm-star>
+                </td>
+                </tr>
+                
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
